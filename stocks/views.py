@@ -5,12 +5,17 @@ from rest_framework import status
 from .models import Stock
 from .serializers import *
 
+import yfinance as yf
+
 @api_view(['GET', 'POST'])
 def stocks_list(request):
     if request.method == 'GET':
         data = Stock.objects.all()
-
         serializer = StockSerializer(data, context={'request': request}, many=True)
+        
+        for stock in data:
+            s = yf.Ticker(stock.ticker)
+            print(s.info)
 
         return Response(serializer.data)
 
