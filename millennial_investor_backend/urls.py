@@ -15,11 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from stocks import views
 from django.conf.urls import url
+from stocks import views as stock_views
+from futures import views as future_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/stocks/', views.stocks_list),
-    path('api/stocks/<pk>/', views.stocks_detail)
+    path('api/stocks/', stock_views.stocks_list),
+    path('api/stocks/<pk>/', stock_views.stocks_detail),
+    path('api/futures/', future_views.futures_list),
 ]

@@ -43,8 +43,9 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'corsheaders',
-    'yfinance',
-    'stocks'
+    'bs4',
+    'stocks',
+    'futures',
 ]
 
 MIDDLEWARE = [
