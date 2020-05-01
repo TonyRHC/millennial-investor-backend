@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'bs4',
     'stocks',
     'futures',
+    'headliners',
 ]
 
 MIDDLEWARE = [
