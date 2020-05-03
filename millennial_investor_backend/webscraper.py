@@ -4,6 +4,7 @@ from GoogleNews import GoogleNews
 
 FUTURES_URL = "https://finance.yahoo.com/commodities"
 GOOGLE_NEWS_URL = "https://news.google.com/news?q={}&output=rss"
+STOCKS_URL = "https://finance.yahoo.com/quote/{}?p={}&.tsrc=fin-srch"
 
 def get_futures():
     page = requests.get(FUTURES_URL)
@@ -72,3 +73,18 @@ def get_headliners(keyword):
         headliners.append(headliner)
     
     return headliners
+
+def get_stock(symbol):
+    page = requests.get(STOCKS_URL.format(symbol, symbol))
+    soup = BeautifulSoup(page.content, 'html.parser')
+    if soup.find('h2') != None:
+        return None
+    
+    data = soup.find('div', {'class': 'My(6px) Pos(r) smartphone_Mt(6px)'})
+    price = data.find('span').text
+    change = data.find_all('span')[1].text
+    return {
+        'symbol': symbol,
+        'price': price,
+        'change': change 
+    }

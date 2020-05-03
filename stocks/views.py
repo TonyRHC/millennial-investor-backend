@@ -4,22 +4,20 @@ from rest_framework import status
 
 from .models import *
 from .serializers import *
+from millennial_investor_backend import webscraper
 
 #Stocks
 @api_view(['GET', 'POST'])
 def stocks_list(request):
     if request.method == 'GET':
-        data = Stock.objects.all()
-
-        serializer = StockSerializer(data, context={'request': request}, many=True)
-
-        return Response(serializer.data)
+        return Response(get_all_stocks(), status=status.HTTP_200_OK)
 
     elif request.method == 'POST':
         serializer = StockSerializer(data=request.data)
-        if serializer.is_valid():
+
+        if serializer.is_valid() and webscraper.get_stock(request.data['ticker']) != None:
             serializer.save()
-            return Response(status=status.HTTP_201_CREATED)
+            return Response(get_all_stocks(), status=status.HTTP_201_CREATED)
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -32,11 +30,22 @@ def stocks_detail(request, pk):
 
     if request.method == 'PUT':
         serializer = StockSerializer(stock, data=request.data,context={'request': request})
-        if serializer.is_valid():
+        if serializer.is_valid() and webscraper.get_stock(request.data['ticker']) != None:
             serializer.save()
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            return Response(get_all_stocks(), status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
         stock.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(get_all_stocks(), status=status.HTTP_200_OK)
+
+def get_all_stocks():
+    data = Stock.objects.all()
+    stocks = []
+    for stock_model in data:
+        stock = {
+            'pk': stock_model.pk,
+            'data': webscraper.get_stock(stock_model.ticker)
+        }
+        stocks.append(stock)
+    return stocks
