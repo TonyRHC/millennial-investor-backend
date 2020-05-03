@@ -1,4 +1,4 @@
-FROM python:3.7.4
+FROM python:3.6-alpine
 
 MAINTAINER Tony Chen <github.com/TonyRHC>
 
@@ -12,8 +12,8 @@ WORKDIR /millennial_investor_backend
 
 RUN pip install -r requirements.txt
 
-RUN python millennial_investor_backend/manage.py makemigrations
+RUN python manage.py makemigrations
 
-RUN python millennial_investor_backend/manage.py migrate
+RUN python manage.py migrate
 
-CMD [ "python", "millennial_investor_backend/manage.py", "runserver", "0.0.0.0:8000" ]
+CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]

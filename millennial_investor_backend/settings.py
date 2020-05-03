@@ -13,11 +13,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 from .secret_settings import SETTINGS_KEY
 
-ALLOWED_HOSTS['*']
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -26,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = SETTINGS_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['http://ec2-18-219-62-54.us-east-2.compute.amazonaws.com']
 
 # Application definition
 

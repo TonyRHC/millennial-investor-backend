@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-from GoogleNews import GoogleNews
 
 FUTURES_URL = "https://finance.yahoo.com/commodities"
 GOOGLE_NEWS_URL = "https://news.google.com/news?q={}&output=rss"
