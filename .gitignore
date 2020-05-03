@@ -1,3 +1,4 @@
+millennial_investor_backend/settings/secret_settings.py
 millennial_investor_backend/secret_settings.py
 db.sqlite3
 __pycache__
